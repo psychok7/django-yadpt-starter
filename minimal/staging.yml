@@ -9,7 +9,7 @@ services:
 
   {{ project_name }}_postgis:
     restart: always
-    image: mdillon/postgis:9.3
+    image: mdillon/postgis:9.4
     volumes_from:
       - {{ project_name }}_data
     environment:
@@ -20,7 +20,7 @@ services:
   # completely destroyed.
   {{ project_name }}_data:
     restart: "no"
-    image: mdillon/postgis:9.3
+    image: mdillon/postgis:9.4
     volumes:
       - /etc/postgresql
       - /var/log/postgresql
