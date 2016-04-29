@@ -7,18 +7,18 @@ services:
 
   # Docker container ports do not interfere with the host ports
 
-  dorothy_postgis:
+  {{ project_name }}_postgis:
     restart: always
     image: mdillon/postgis:9.3
     volumes_from:
-      - dorothy_data
+      - {{ project_name }}_data
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "postgres"
 
   # This helps ensure that the data persists even if the Postgres container is
   # completely destroyed.
-  dorothy_data:
+  {{ project_name }}_data:
     restart: "no"
     image: mdillon/postgis:9.3
     volumes:
@@ -27,11 +27,11 @@ services:
       - /var/lib/postgresql
     command: "true"
 
-  dorothy_redis:
+  {{ project_name }}_redis:
     restart: always
     image: redis:3.0.7
 
-  dorothy_web:
+  {{ project_name }}_web:
     restart: always
     build:
       context: .
@@ -40,17 +40,17 @@ services:
     volumes:
       - .:/code
     depends_on:
-      - dorothy_postgis
-      - dorothy_data
-      - dorothy_redis
+      - {{ project_name }}_postgis
+      - {{ project_name }}_data
+      - {{ project_name }}_redis
     env_file: .env
 
-  dorothy_nginx:
+  {{ project_name }}_nginx:
     restart: always
     build: ./compose/nginx/production
     depends_on:
-      - dorothy_web
+      - {{ project_name }}_web
     volumes_from:
-      - dorothy_web
+      - {{ project_name }}_web
     ports:
       - "0.0.0.0:80:80"
