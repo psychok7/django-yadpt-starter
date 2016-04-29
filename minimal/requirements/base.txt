@@ -7,3 +7,4 @@ django-extensions==1.6.1
 ipdb==0.8.2
 django-dbbackup==2.3.3
 django-braces==1.8.1
+raven==5.1.1

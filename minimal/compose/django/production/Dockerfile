@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y \
   git-core \
   python3 \
   python3-pip \
-  python-dev \
+  python3-dev \
   libpq-dev \
   postgresql-client-9.3 \
   libjpeg-dev \

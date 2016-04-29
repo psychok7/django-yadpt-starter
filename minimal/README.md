@@ -1,0 +1,1 @@
+django-admin startproject shopimoz  --template=/home/psychok7/code/open\ source/django-project-template-yadt/minimal/ --extension='py, yml, conf, sh'
