@@ -1,0 +1,40 @@
+version: '2'
+
+services:
+  # Based on https://realpython.com/blog/python/django-development-with-docker-compose-and-machine/
+  dorothy_postgis:
+    image: mdillon/postgis:9.3
+    volumes_from:
+      - dorothy_data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "postgres"
+
+  # This helps ensure that the data persists even if the Postgres container is
+  # completely destroyed.
+  dorothy_data:
+    restart: "no"
+    image: mdillon/postgis:9.3
+    volumes:
+      - /etc/postgresql
+      - /var/log/postgresql
+      - /var/lib/postgresql
+    command: "true"
+
+  dorothy_redis:
+    image: redis:3.0.7
+
+  dorothy_web:
+    build:
+      context: .
+      dockerfile: ./compose/django/dev/Dockerfile
+  #  command: gunicorn dorothy.wsgi:application -w 4 -t 120 -e DJANGO_SETTINGS_MODULE=dorothy.settings.production -b :8000
+    command: python3 manage.py runserver 0.0.0.0:8000 --settings=dorothy.settings.local
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - dorothy_postgis
+      - dorothy_data
+      - dorothy_redis

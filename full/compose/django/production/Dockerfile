@@ -1,0 +1,37 @@
+FROM ubuntu:14.04.4
+ENV PYTHONUNBUFFERED 1
+RUN apt-get update && apt-get install -y \
+  build-essential \
+  git-core \
+  python3 \
+  python3-pip \
+  python-dev \
+  libpq-dev \
+  postgresql-client-9.3 \
+  libjpeg-dev \
+  binutils \
+  libproj-dev \
+  gdal-bin \
+  libxml2-dev \
+  libxslt1-dev \
+  zlib1g-dev \
+  libffi-dev \
+  libssl-dev \
+  ipython
+
+# Requirements have to be pulled and installed here, otherwise caching won't work
+COPY ./requirements /requirements
+
+RUN pip3 install -r /requirements/production.txt
+
+COPY ./compose/django/production/gunicorn.sh /gunicorn.sh
+COPY ./compose/django/production/entrypoint.sh /entrypoint.sh
+RUN sed -i 's/\r//' /entrypoint.sh
+RUN sed -i 's/\r//' /gunicorn.sh
+RUN chmod +x /entrypoint.sh
+RUN chmod +x /gunicorn.sh
+
+COPY . /code
+WORKDIR /code
+
+ENTRYPOINT ["/entrypoint.sh"]

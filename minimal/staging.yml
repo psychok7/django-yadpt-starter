@@ -1,0 +1,56 @@
+version: '2'
+
+services:
+  # Based on https://realpython.com/blog/python/django-development-with-docker-compose-and-machine/
+
+  # If restart: always is enabled it will run even if the machine is restarted.
+
+  # Docker container ports do not interfere with the host ports
+
+  dorothy_postgis:
+    restart: always
+    image: mdillon/postgis:9.3
+    volumes_from:
+      - dorothy_data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "postgres"
+
+  # This helps ensure that the data persists even if the Postgres container is
+  # completely destroyed.
+  dorothy_data:
+    restart: "no"
+    image: mdillon/postgis:9.3
+    volumes:
+      - /etc/postgresql
+      - /var/log/postgresql
+      - /var/lib/postgresql
+    command: "true"
+
+  dorothy_redis:
+    restart: always
+    image: redis:3.0.7
+
+  dorothy_web:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./compose/django/staging/Dockerfile
+    command: /gunicorn.sh
+    volumes:
+      - .:/code
+    depends_on:
+      - dorothy_postgis
+      - dorothy_data
+      - dorothy_redis
+    env_file: .env
+
+  dorothy_nginx:
+    restart: always
+    build: ./compose/nginx/staging
+    depends_on:
+      - dorothy_web
+    volumes_from:
+      - dorothy_web
+    ports:
+      - "0.0.0.0:8005:80"
