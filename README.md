@@ -2,7 +2,7 @@
 django-project-template-yadpt
 =============================
 
-django-project-template-yadpt is Yet Another Django Project Template skeleton for Django projects.
+`django-project-template-yadpt` is Yet Another Django Project Template skeleton for Django projects.
 
 There will be two template versions once it is finished, being one a minimal one and another one more complete one.
 
@@ -26,7 +26,13 @@ variables allow for both the file contents and path names to be customized to
 this specific project.
 
 
+Used Third Party Apps
+=====================
 
+ - https://github.com/fusionbox/django-authtools
+ - https://github.com/django-extensions/django-extensions
+ - https://github.com/django-dbbackup/django-dbbackup
+ - https://github.com/brack3t/django-braces
 
 See the files included in the project_template directory for an example.
 
