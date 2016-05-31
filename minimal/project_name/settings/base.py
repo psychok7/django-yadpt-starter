@@ -44,6 +44,7 @@ DJANGO_APPS = (
 
 THIRD_PARTY_APPS = (
     'authtools',
+    'dbbackup',
     'django_extensions',
 )
 
@@ -126,6 +127,18 @@ STATICFILES_DIRS = (
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',  # default
 )
+
+BROKER_URL = 'redis://{{ project_name }}_redis:6379/0'
+
+# https://docs.djangoproject.com/en/1.8/topics/http/sessions/#using-cached-sessions
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': BROKER_URL,
+    },
+}
 
 # django-authtools settings
 AUTH_USER_MODEL = 'authtools.User'

@@ -27,10 +27,15 @@ the directory in where the new project directory should be created):
 Used Third Party Apps
 =====================
 
+ - https://github.com/docker/docker
  - https://github.com/fusionbox/django-authtools
  - https://github.com/django-extensions/django-extensions
  - https://github.com/django-dbbackup/django-dbbackup
  - https://github.com/brack3t/django-braces
+ - https://github.com/sebleier/django-redis-cache
+ - https://github.com/getsentry/raven-python
+ - https://github.com/kennethreitz/requests
+ - https://github.com/nedbat/coveragepy
 
 See the files included in the project_template directory for an example.
 
