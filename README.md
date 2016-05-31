@@ -6,11 +6,13 @@ django-project-template-yadpt
 
 There will be two template versions once it is finished, being one a minimal one and another one more complete one.
 
+I am using `Docker` as well in the template, with a Production, Staging, and Local development version.
+
 
 Installation
 ============
 
-To install, simply copy this repository to your custom location, change directory into that location and run the following command
+To install, simply copy this repository to your custom location, and run the following command specifiying the `--template` location to the location where you cloned the `django-project-template-yadpt` repository
 
 
 Usage
@@ -20,10 +22,6 @@ After installing django-project-template-yadpt, simply run the following command
 the directory in where the new project directory should be created):
 
 	django-admin startproject project_name  --template=/your_path/django-project-template-yadpt/minimal/ --extension='py, yml, conf, sh'
-
-The script will prompt for values to replace boilerplate variables with. These
-variables allow for both the file contents and path names to be customized to
-this specific project.
 
 
 Used Third Party Apps
