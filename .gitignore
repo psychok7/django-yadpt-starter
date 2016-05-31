@@ -15,4 +15,3 @@ __pycache__
 *.rdb
 *.tar.gz
 *.psql
-.env

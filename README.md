@@ -28,6 +28,7 @@ Used Third Party Apps
 =====================
 
  - https://github.com/docker/docker
+ - https://github.com/docker/compose
  - https://github.com/fusionbox/django-authtools
  - https://github.com/django-extensions/django-extensions
  - https://github.com/django-dbbackup/django-dbbackup
