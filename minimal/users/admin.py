@@ -19,9 +19,6 @@ class UserProfileInline(admin.StackedInline):
 
 # http://stackoverflow.com/a/10342823/977622
 class UserAdmin(NamedUserAdmin):
-    list_display = (
-        'is_active', USERNAME_FIELD, 'is_superuser', 'is_staff', 'get_phone'
-    )
 
     def add_view(self, *args, **kwargs):
         self.inlines = []
