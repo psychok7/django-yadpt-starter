@@ -3,7 +3,7 @@ version: '2'
 services:
   # Based on https://realpython.com/blog/python/django-development-with-docker-compose-and-machine/
   {{ project_name }}_postgis:
-    image: mdillon/postgis:9.4
+    image: mdillon/postgis:9.5
     volumes_from:
       - {{ project_name }}_data
     environment:
@@ -14,7 +14,7 @@ services:
   # completely destroyed.
   {{ project_name }}_data:
     restart: "no"
-    image: mdillon/postgis:9.4
+    image: mdillon/postgis:9.5
     volumes:
       - /etc/postgresql
       - /var/log/postgresql

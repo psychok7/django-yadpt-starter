@@ -1,4 +1,4 @@
-FROM ubuntu:14.04.4
+FROM ubuntu:16.04
 ENV PYTHONUNBUFFERED 1
 RUN apt-get update && apt-get install -y \
   build-essential \
@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
   python3-pip \
   python3-dev \
   libpq-dev \
-  postgresql-client-9.3 \
+  postgresql-client-9.5 \
   libjpeg-dev \
   binutils \
   libproj-dev \
