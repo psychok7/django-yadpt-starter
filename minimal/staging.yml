@@ -54,3 +54,12 @@ services:
       - {{ project_name }}_web
     ports:
       - "0.0.0.0:8005:80"
+
+  {{ project_name }}_certbot:
+    restart: always
+    build: ./compose/certbot/production
+    depends_on:
+      - {{ project_name }}_web
+    volumes_from:
+      - {{ project_name }}_web
+    env_file: certbot.env
