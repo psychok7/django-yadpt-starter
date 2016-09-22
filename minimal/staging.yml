@@ -59,7 +59,7 @@ services:
     restart: always
     build: ./compose/certbot/production
     depends_on:
-      - {{ project_name }}_web
+      - {{ project_name }}_nginx
     volumes_from:
-      - {{ project_name }}_web
+      - {{ project_name }}_nginx
     env_file: certbot.env
