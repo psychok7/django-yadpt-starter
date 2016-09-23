@@ -62,4 +62,4 @@ services:
       - {{ project_name }}_nginx
     volumes_from:
       - {{ project_name }}_nginx
-    env_file: certbot.env
+    env_file: production.env

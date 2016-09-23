@@ -57,9 +57,9 @@ services:
 
   {{ project_name }}_certbot:
     restart: always
-    build: ./compose/certbot/production
+    build: ./compose/certbot/staging
     depends_on:
       - {{ project_name }}_nginx
     volumes_from:
       - {{ project_name }}_nginx
-    env_file: certbot.env
+    env_file: staging.env
