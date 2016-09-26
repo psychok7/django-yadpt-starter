@@ -24,6 +24,20 @@ the directory in where the new project directory should be created):
 	django-admin startproject project_name  --template=/your_path/django-project-template-yadpt/minimal/ --extension='py, yml, conf, sh'
 
 
+Free HTTPS (SSL/TLS) for websites (Let's Encrypt certificates) using Certbot
+=============================================================================
+
+For Staging and Production Environments, a [Let's Encrypt](https://letsencrypt.org) Certificate is generated using [Certbot](https://certbot.eff.org).
+In this instance, Certbot is uses the `--webroot` plugin which creates a temporary file in `WEBROOT_PATH/.well-known` to validate correct ownership of your domain after which it will generate a certificate and place it in `/etc/letsencrypt/live/DOMAIN`.
+
+Before building and starting your staging or production containers you need to ensure that:
+
+- `staging.env` and `production.env` have the correct `EMAIL=` and `DOMAIN=` information filled out;
+- Your django app must already be reachable at `DOMAIN`, meaning DNS must already be configured properly;
+
+**Note:** Given there is a daily cron job which checks to see if the certificate is up for renewal, it's essential the container is always kept running.
+
+
 Used Third Party Apps
 =====================
 
@@ -39,4 +53,3 @@ Used Third Party Apps
  - https://github.com/nedbat/coveragepy
 
 See the files included in the project_template directory for an example.
-
