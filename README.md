@@ -24,8 +24,8 @@ the directory in where the new project directory should be created):
 	django-admin startproject project_name  --template=/your_path/django-project-template-yadpt/minimal/ --extension='py, yml, conf, sh'
 
 
-Certbot Usage
-=============
+Free HTTPS (SSL/TLS) for websites (Let's Encrypt certificates) using Certbot
+=============================================================================
 
 For Staging and Production Environments, a [Let's Encrypt](https://letsencrypt.org) Certificate is generated using [Certbot](https://certbot.eff.org).
 In this instance, Certbot is uses the `--webroot` plugin which creates a temporary file in `WEBROOT_PATH/.well-known` to validate correct ownership of your domain after which it will generate a certificate and place it in `/etc/letsencrypt/live/DOMAIN`.
