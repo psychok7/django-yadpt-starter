@@ -19,6 +19,15 @@ RUN apt-get update && apt-get install -y \
   libssl-dev \
   ipython
 
+RUN dpkg-reconfigure locales
+# Set the locale
+RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+ENV LC_CTYPE en_US.UTF-8
+RUN locale
+
 # Requirements have to be pulled and installed here, otherwise caching won't work
 COPY ./requirements /requirements
 

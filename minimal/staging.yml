@@ -10,22 +10,12 @@ services:
   {{ project_name }}_postgis:
     restart: always
     image: mdillon/postgis:9.5
-    volumes_from:
-      - {{ project_name }}_data
+    volumes:
+      - {{ project_name }}_data:/var/lib/postgresql/data
+      - ./logs/postgres:/var/log/postgresql
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "postgres"
-
-  # This helps ensure that the data persists even if the Postgres container is
-  # completely destroyed.
-  {{ project_name }}_data:
-    restart: "no"
-    image: mdillon/postgis:9.5
-    volumes:
-      - /etc/postgresql
-      - /var/log/postgresql
-      - /var/lib/postgresql
-    command: "true"
 
   {{ project_name }}_redis:
     restart: always
@@ -38,10 +28,11 @@ services:
       dockerfile: ./compose/django/staging/Dockerfile
     command: /gunicorn.sh
     volumes:
-      - .:/code
+      - ./media:/code/media
+      - ./staticfiles:/code/staticfiles
+      - ./{{ project_name }}_management:/code/{{ project_name }}_management
     depends_on:
       - {{ project_name }}_postgis
-      - {{ project_name }}_data
       - {{ project_name }}_redis
     env_file: .env
 
@@ -50,8 +41,9 @@ services:
     build: ./compose/nginx/staging
     depends_on:
       - {{ project_name }}_web
-    volumes_from:
-      - {{ project_name }}_web
+    volumes:
+      - ./media:/code/media
+      - ./staticfiles:/code/staticfiles
     ports:
       - "0.0.0.0:8005:80"
 
@@ -63,3 +55,7 @@ services:
     volumes_from:
       - {{ project_name }}_nginx
     env_file: staging.env
+
+
+volumes:
+  {{ project_name }}_data:
