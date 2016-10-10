@@ -2,9 +2,7 @@ version: '2'
 
 services:
   # Based on https://realpython.com/blog/python/django-development-with-docker-compose-and-machine/
-
   # If restart: always is enabled it will run even if the machine is restarted.
-
   # Docker container ports do not interfere with the host ports
 
   {{ project_name }}_postgis:
@@ -41,21 +39,24 @@ services:
     build: ./compose/nginx/staging
     depends_on:
       - {{ project_name }}_web
-    volumes:
-      - ./media:/code/media
-      - ./staticfiles:/code/staticfiles
+    volumes_from:
+      - {{ project_name }}_web
+      - {{ project_name }}_certbot
     ports:
       - "0.0.0.0:8005:80"
 
   {{ project_name }}_certbot:
     restart: always
     build: ./compose/certbot/staging
+    volumes:
+      - {{ project_name }}_staging_certs:/etc/letsencrypt
+    volumes_from:
+      - {{ project_name }}_web
     depends_on:
       - {{ project_name }}_nginx
-    volumes_from:
-      - {{ project_name }}_nginx
+      - {{ project_name }}_web
     env_file: staging.env
-
 
 volumes:
   {{ project_name }}_data:
+  {{ project_name }}_staging_certs:
