@@ -2,30 +2,18 @@ version: '2'
 
 services:
   # Based on https://realpython.com/blog/python/django-development-with-docker-compose-and-machine/
-
   # If restart: always is enabled it will run even if the machine is restarted.
-
   # Docker container ports do not interfere with the host ports
 
   {{ project_name }}_postgis:
     restart: always
     image: mdillon/postgis:9.5
-    volumes_from:
-      - {{ project_name }}_data
+    volumes:
+      - {{ project_name }}_data:/var/lib/postgresql/data
+      - ./logs/postgres:/var/log/postgresql
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "postgres"
-
-  # This helps ensure that the data persists even if the Postgres container is
-  # completely destroyed.
-  {{ project_name }}_data:
-    restart: "no"
-    image: mdillon/postgis:9.5
-    volumes:
-      - /etc/postgresql
-      - /var/log/postgresql
-      - /var/lib/postgresql
-    command: "true"
 
   {{ project_name }}_redis:
     restart: always
@@ -38,10 +26,11 @@ services:
       dockerfile: ./compose/django/production/Dockerfile
     command: /gunicorn.sh
     volumes:
-      - .:/code
+      - ./media:/code/media
+      - ./staticfiles:/code/staticfiles
+      - ./{{ project_name }}_management:/code/{{ project_name }}_management
     depends_on:
       - {{ project_name }}_postgis
-      - {{ project_name }}_data
       - {{ project_name }}_redis
     env_file: .env
 
@@ -60,12 +49,14 @@ services:
     restart: always
     build: ./compose/certbot/production
     volumes:
-      - production_certs:/etc/letsencrypt
+      - {{ project_name }}_production_certs:/etc/letsencrypt
+    volumes_from:
+      - {{ project_name }}_web
     depends_on:
       - {{ project_name }}_nginx
-    volumes_from:
-      - {{ project_name }}_nginx
+      - {{ project_name }}_web
     env_file: production.env
 
 volumes:
-  production_certs:
+  {{ project_name }}_data:
+  {{ project_name }}_production_certs:

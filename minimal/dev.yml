@@ -4,22 +4,12 @@ services:
   # Based on https://realpython.com/blog/python/django-development-with-docker-compose-and-machine/
   {{ project_name }}_postgis:
     image: mdillon/postgis:9.5
-    volumes_from:
-      - {{ project_name }}_data
+    volumes:
+      - {{ project_name }}_data:/var/lib/postgresql/data
+      - ./logs/postgres:/var/log/postgresql
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "postgres"
-
-  # This helps ensure that the data persists even if the Postgres container is
-  # completely destroyed.
-  {{ project_name }}_data:
-    restart: "no"
-    image: mdillon/postgis:9.5
-    volumes:
-      - /etc/postgresql
-      - /var/log/postgresql
-      - /var/lib/postgresql
-    command: "true"
 
   {{ project_name }}_redis:
     image: redis:3.0.7
@@ -36,5 +26,8 @@ services:
       - "8000:8000"
     depends_on:
       - {{ project_name }}_postgis
-      - {{ project_name }}_data
       - {{ project_name }}_redis
+
+
+volumes:
+  {{ project_name }}_data:
