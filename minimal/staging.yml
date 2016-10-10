@@ -52,14 +52,20 @@ services:
       - {{ project_name }}_web
     volumes_from:
       - {{ project_name }}_web
+      - {{ project_name }}_certbot
     ports:
       - "0.0.0.0:8005:80"
 
   {{ project_name }}_certbot:
     restart: always
     build: ./compose/certbot/staging
+    volumes:
+      - staging_certs:/etc/letsencrypt
     depends_on:
       - {{ project_name }}_nginx
     volumes_from:
       - {{ project_name }}_nginx
     env_file: staging.env
+
+volumes:
+  staging_certs:

@@ -52,14 +52,20 @@ services:
       - {{ project_name }}_web
     volumes_from:
       - {{ project_name }}_web
+      - {{ project_name }}_certbot
     ports:
       - "0.0.0.0:80:80"
 
   {{ project_name }}_certbot:
     restart: always
     build: ./compose/certbot/production
+    volumes:
+      - production_certs:/etc/letsencrypt
     depends_on:
       - {{ project_name }}_nginx
     volumes_from:
       - {{ project_name }}_nginx
     env_file: production.env
+
+volumes:
+  production_certs:
