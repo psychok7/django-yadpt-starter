@@ -43,7 +43,8 @@ services:
       - ./media:/code/media
       - ./staticfiles:/code/staticfiles
     ports:
-      - "0.0.0.0:80:80"
+      - "80:80"
+      - "443:443"
 
   {{ project_name }}_certbot:
     restart: always
