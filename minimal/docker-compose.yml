@@ -39,9 +39,9 @@ services:
     build: ./compose/nginx/production
     depends_on:
       - {{ project_name }}_web
-    volumes_from:
-      - {{ project_name }}_web
-      - {{ project_name }}_certbot
+    volumes:
+      - ./media:/code/media
+      - ./staticfiles:/code/staticfiles
     ports:
       - "0.0.0.0:80:80"
 
@@ -49,9 +49,8 @@ services:
     restart: always
     build: ./compose/certbot/production
     volumes:
-      - {{ project_name }}_production_certs:/etc/letsencrypt
-    volumes_from:
-      - {{ project_name }}_web
+      - {{ project_name }}_https_certs:/etc/letsencrypt
+      - ./staticfiles:/code/staticfiles
     depends_on:
       - {{ project_name }}_nginx
       - {{ project_name }}_web
@@ -59,4 +58,4 @@ services:
 
 volumes:
   {{ project_name }}_data:
-  {{ project_name }}_production_certs:
+  {{ project_name }}_https_certs:
