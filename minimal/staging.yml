@@ -51,13 +51,11 @@ services:
     volumes:
       - {{ project_name }}_https_certs:/etc/letsencrypt
       - ./staticfiles:/code/staticfiles
-    volumes_from:
-      - {{ project_name }}_web
     depends_on:
       - {{ project_name }}_nginx
       - {{ project_name }}_web
-    env_file: staging.env
 
 volumes:
   {{ project_name }}_data:
   {{ project_name }}_https_certs:
+    external: true

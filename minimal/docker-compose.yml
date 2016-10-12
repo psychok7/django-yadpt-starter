@@ -55,8 +55,8 @@ services:
     depends_on:
       - {{ project_name }}_nginx
       - {{ project_name }}_web
-    env_file: production.env
 
 volumes:
   {{ project_name }}_data:
   {{ project_name }}_https_certs:
+    external: true
