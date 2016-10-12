@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
 
+import sys
 import argparse
 import subprocess
 
+# Python 2/3 support
+from six.moves import input, urllib
 from email.utils import parseaddr
 
 # TODO: point this to a new tag with the latest code. this one is an old one.
 TEMPLATE_VERSION_TAG = '0.2'
 
-# TODO: we still need to load the Extracontext into the template files.
+# Make sure you have Django 1.8.x installed in the appropriate Python version
+# you are using (either pip3 or pip).
 
 
 def user_input():
@@ -26,18 +30,37 @@ def user_input():
     return email, domain
 
 
-def fetch_latest_template(project_name):
+def fetch_latest_template(project_name, email, domain):
     tag_version = TEMPLATE_VERSION_TAG
     extension = 'py, yml, conf, sh'
+
+    # Download forked django-startproject.py from
+    # https://github.com/alfredo/django-startproject-plus in order to pass
+    # extra-context variables.
+    urllib.request.urlretrieve(
+        'https://raw.githubusercontent.com/psychok7/django-startproject-plus/'
+        'master/django-startproject.py', 'minimal/_config/django-startproject.py'
+    )
+
     template = (
         'https://github.com/psychok7/django-project-template-yadpt/archive/'
         'v{tag_version}.zip'.format(**locals())
     )
+
+    if sys.version_info >= (3, 0):
+        python_version = 'python3'
+    else:
+        python_version = 'python'
+
+    extra_context = '{"EMAIL": "' + email + '", "DOMAIN": "'+domain+'"}'
+
     generate_template = (
-        'django-admin startproject {project_name} '
+        '{python_version} django-startproject.py {project_name} '
         '--template={template} '
-        '--extension="{extension}"'.format(**locals())
+        '--extension="{extension}" --settings=_config.dummy_settings'.format(**locals())
     )
+    generate_template += " --extra_context='" + extra_context + "'"
+
     print('generate_template: {generate_template}'.format(**locals()))
 
     # TODO: uncomment this after it is tested
@@ -67,7 +90,8 @@ if __name__ == "__main__":
     if args['environment'] == 'production' or args['environment'] == 'staging':
         print(args)
         email, domain = user_input()
-        fetch_latest_template(project_name=args['project_name'])
+        fetch_latest_template(
+            project_name=args['project_name'], email=email, domain=domain)
         generate_cerbot_certs(
             project_name=args['project_name'], email=email, domain=domain)
     else:

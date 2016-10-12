@@ -1,3 +1,3 @@
 #!/bin/sh
 
-/opt/certbot/venv/bin/certbot certonly --webroot -n --agree-tos -w /code/staticfiles -m ${EMAIL} -d ${DOMAIN} >> /var/log/certbot-renew.log 2>&1
+/opt/certbot/venv/bin/certbot certonly --webroot -n --agree-tos -w /code/staticfiles -m {{ EMAIL }} -d {{ DOMAIN }} >> /var/log/certbot-renew.log 2>&1
