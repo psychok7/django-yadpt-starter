@@ -42,6 +42,7 @@ services:
     volumes:
       - ./media:/code/media
       - ./staticfiles:/code/staticfiles
+      - {{ project_name }}_https_certs:/etc/letsencrypt
     ports:
       - "80:80"
       - "443:443"
