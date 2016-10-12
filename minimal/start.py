@@ -39,7 +39,7 @@ def fetch_latest_template(project_name, email, domain):
     # extra-context variables.
     urllib.request.urlretrieve(
         'https://raw.githubusercontent.com/psychok7/django-startproject-plus/'
-        'master/django-startproject.py', 'minimal/_config/django-startproject.py'
+        'master/django-startproject.py', 'django-startproject.py'
     )
 
     template = (
