@@ -52,7 +52,7 @@ def fetch_latest_template(project_name, email, domain):
     else:
         python_version = 'python'
 
-    extra_context = '{"EMAIL": "' + email + '", "DOMAIN": "'+domain+'"}'
+    extra_context = '{"EMAIL": "' + email + '", "DOMAIN": "' + domain + '"}'
 
     generate_template = (
         '{python_version} django-startproject.py {project_name} '
