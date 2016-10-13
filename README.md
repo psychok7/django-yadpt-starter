@@ -2,9 +2,15 @@
 
 `django-project-template-yadpt` is Yet Another Django Project Template skeleton for Django projects.
 
-The aim of this template is to provide There will be two template versions once it is finished, being one a minimal one and another one more complete one.
+While there is no shortage of Template Skeletons for Django projects, the aim of this one is to provide you, to the extent possible, with a fully automated setup using `Docker Containers` and a [Let's Encrypt](https://letsencrypt.org) SSL certificate for your site, all while adhering to recommended best practices. A few key features are:
 
-I am using `Docker` as well in the template, with a Production, Staging, and Local development version.
+- `django-yadtp-starter` is a small utility that makes it trivial to setup you project;
+- Automatic generation and renewal of site's certificates;
+- Adheres to best practices;
+- Provides 3 distinct environments: Production, Staging, and Local development version
+
+Once finished there should be 2 templates: a **minimal** but functional template and a more complete template.
+
 
 ## Usage - The Short Version
 
@@ -12,7 +18,7 @@ If you're in a rush to get your shiny new django project up and running, complet
 
 1. Install `django-project-template-yadpt` setup script.
 
-		pip install yadtp-setup
+		pip install django-yadtp-starter
 
 2. Create your project structure
 
@@ -49,7 +55,7 @@ Free HTTPS (SSL/TLS) for websites (Let's Encrypt certificates) using Certbot
 =============================================================================
 
 For Staging and Production Environments, a [Let's Encrypt](https://letsencrypt.org) Certificate is generated using [Certbot](https://certbot.eff.org).
-In this instance, Certbot is uses the `--webroot` plugin which creates a temporary file in `WEBROOT_PATH/.well-known` to validate correct ownership of your domain after which it will generate a certificate and place it in `/etc/letsencrypt/live/DOMAIN`.
+In this instance, Certbot uses the `--webroot` plugin which creates a temporary file in `WEBROOT_PATH/.well-known` to validate correct ownership of your domain after which it will generate a certificate and place it in `/etc/letsencrypt/live/DOMAIN`.
 
 Before building and starting your staging or production containers you need to ensure that:
 
