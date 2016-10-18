@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import os
 import argparse
+import shutil
 import subprocess
 
 # Python 2/3 support
 from six.moves import input, urllib
 from email.utils import parseaddr
 
-# TODO: point this to a new tag with the latest code. this one is an old one.
-TEMPLATE_VERSION_TAG = '0.2'
+# Point this to a tag with the latest code.
+TEMPLATE_VERSION_TAG = '1.0-beta'
 
 # Make sure you have Django 1.8.x installed in the appropriate Python version
 # you are using (either pip3 or pip).
@@ -63,8 +65,7 @@ def fetch_latest_template(project_name, email, domain):
 
     print('generate_template: {generate_template}'.format(**locals()))
 
-    # TODO: uncomment this after it is tested
-    # subprocess.call([generate_template], shell=True)
+    subprocess.call([generate_template], shell=True)
 
 
 def generate_cerbot_certs(project_name, email, domain):
@@ -75,8 +76,29 @@ def generate_cerbot_certs(project_name, email, domain):
     )
     print('generate_certs: ', generate_certs)
 
-    # TODO: uncomment this after it is tested
-    # subprocess.call([generate_certs], shell=True)
+    subprocess.call([generate_certs], shell=True)
+
+
+def _cleanup(project_name):
+    if not os.path.exists(project_name):
+        raise ValueError("Something went wrong")
+    else:
+        # Copy the sub-folder inside /minimal one level up and delete
+        # unnecessary files.
+        os.rename(project_name, 'temp')
+        os.chdir('temp')
+        os.rename('minimal', project_name)
+        os.chdir('../')
+        shutil.move('temp/' + project_name + '/', '.')
+        shutil.rmtree('temp/')
+        shutil.rmtree(project_name + '/_config/')
+        os.remove(project_name + '/start.py')
+
+        if os.path.exists('django-startproject.py'):
+            os.remove('django-startproject.py')
+
+        return True
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -87,12 +109,34 @@ if __name__ == "__main__":
 
     args = vars(parser.parse_args())
 
+    project_name = args['project_name']
+
     if args['environment'] == 'production' or args['environment'] == 'staging':
         print(args)
         email, domain = user_input()
         fetch_latest_template(
-            project_name=args['project_name'], email=email, domain=domain)
+            project_name=project_name, email=email, domain=domain)
         generate_cerbot_certs(
-            project_name=args['project_name'], email=email, domain=domain)
+            project_name=project_name, email=email, domain=domain)
+        _cleanup(project_name=project_name)
+
+    elif args['environment'] == 'dev':
+        tag_version = TEMPLATE_VERSION_TAG
+        extension = 'py, yml, conf, sh'
+        template = (
+            'https://github.com/psychok7/django-project-template-yadpt/archive/'
+            'v{tag_version}.zip'.format(**locals())
+        )
+        generate_template = (
+            'django-admin startproject {project_name} --template={template} '
+            '--extension="{extension}"'.format(**locals())
+        )
+
+        print('generate_template dev: {generate_template}'.format(**locals()))
+
+        subprocess.call([generate_template], shell=True)
+
+        _cleanup(project_name=project_name)
+
     else:
         raise ValueError("environment not allowed")
