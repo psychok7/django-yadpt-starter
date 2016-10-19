@@ -1,0 +1,5 @@
+include minimal/yadtp-setup.py
+include minimal/_config/dummy_settings
+# Include docs in the root.
+include LICENSE.md
+include README.md
