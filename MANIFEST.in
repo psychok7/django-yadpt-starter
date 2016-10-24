@@ -3,3 +3,4 @@ include minimal/_config/dummy_settings.py
 # Include docs in the root.
 include LICENSE.md
 include README.md
+include CONTRIBUTORS.md
