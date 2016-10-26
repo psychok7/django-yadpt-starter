@@ -4,17 +4,16 @@
 
 While there is no shortage of Template Skeletons for Django projects, the aim of this one is to provide you, to the extent possible, with a fully automated setup using `Docker Containers` and a [Let's Encrypt](https://letsencrypt.org) SSL certificate for your site, all while adhering to recommended best practices. A few key features are:
 
-- `django-yadtp-starter` is a small utility that makes it trivial to setup you project;
-- Automatic generation and renewal of site's certificates;
+- Configuration performed by `django-yadtp-starter`, a small utility that makes it trivial to setup your project;
+- Automatic generation and renewal of [Let's Encrypt](https://letsencrypt.org) certificates;
 - Adheres to best practices;
-- Provides 3 distinct environments: Production, Staging, and Local development version
+- Provides different environments: One without valid a certificate for local development and another with a valid certificate (for Production or Staging).
 
 Once finished there should be 2 templates: a **minimal** but functional template and a more complete template.
 
+## Usage — The TL;DR Version
 
-## Usage - The Short Version
-
-If you're in a rush to get your shiny new django project up and running, complete with SSL certificates, then just follow these 3 steps:
+Getting your shiny new Django project up and running, complete with SSL certificates, is as easy as following these simple steps:
 
 1. Install `django-yadtp-starter` utility
 
@@ -22,9 +21,9 @@ If you're in a rush to get your shiny new django project up and running, complet
 
 2. Create your project structure
 
-		python yadtp-setup -e ENVIRONMENT PROJECT_NAME
+		python django-yadtp-starter -e ENVIRONMENT PROJECT_NAME
 
-	- `ENVIRONMENT` must be either `production`, `staging` or `dev` _(SSL certificates are only created for staging and production)_
+	- `ENVIRONMENT` must be either `production` or `dev` _(SSL certificates are only created production)_
 	- `PROJECT_NAME` is the name you wish to give your project. Bear in mind that this name will be used throughout the Docker environment (volumes, containers, networks, etc.)
 
 3. Add your beautifully crafted code and then start the `Docker Containers`
@@ -33,42 +32,26 @@ If you're in a rush to get your shiny new django project up and running, complet
 		docker-compose build
 		docker-compose up -d
 
-4. Enjoy!
+4. There is no step 4, just enjoy!
 
 
-## Usage - The Detailed Version
+## Usage — The Detailed Version
 
-`django-yadtp-starter` is a small utility that makes setting up your Django project trivial. While it greatly eases setup, there may be times when you need to do things manually (maybe you're running staging and production on the same host, or simply want to impress your friends (⌐■_■) ). Before explainig how to do things manually, let's have a look at what `django-yadtp-starter` does:
+`django-yadtp-starter` is a small utility that makes setting up your Django project trivial. Essentially what it does is:
 
 1. Downloads [`django-startproject.py`](https://github.com/psychok7/django-startproject-plus/blob/master/django-startproject.py), needed in order to pass extra-context variables;
 2. Asks for email to associate with the generated certificate;
 3. Asks for domain for which to generate a certificate;
 4. Creates the project based on the template;
-5. Launches certbot container and generates a certificate. This will only be done for `production` and `staging` environment;
+5. Launches the Certbot container and generates a certificate. _This will only be done for `production` and `staging` environment_;
 6. Does a little house-keeping and cleans up after itself.
 
+**Note:** `django-yadtp-starter` can be run as many times as you like in order to create multiple environments, there are however some caveats:
 
-### Getting Your Environment Ready
-
-1. Download [`django-startproject.py`](https://github.com/psychok7/django-startproject-plus/blob/master/django-startproject.py) to a location where you intend the place your project
-2. Download or clone this repository
-
-	git clone https://github.com/psychok7/django-project-template-yadpt.git DJANGO_PROJECT_TEMPLATE_PATH
-
-3. Generate the project structure
-
-	python django-startproject.py --template=[PATH TO DJANGO_PROJECT_TEMPLATE_PATH/minimal] \
-								  --extension='py, yml, conf, sh' \
-								  --extra_context='{"EMAIL": "YOUR_EMAIL", "DOMAIN": "YOUR_DOMAIN"}'
+ensure you always use a different `PROJECT_NAME` each time.
 
 
-To install, simply copy this repository to your custom location, and run the following command specifiying the `--template` location to the location where you cloned the `django-project-template-yadpt` repository
 
-
-After installing django-project-template-yadpt, simply run the following command (from within
-the directory in where the new project directory should be created):
-
-	django-admin startproject project_name  --template=/your_path/django-project-template-yadpt/minimal/ --extension='py, yml, conf, sh'
 
 
 ## Free HTTPS (SSL/TLS) for websites (Let's Encrypt certificates) using Certbot
