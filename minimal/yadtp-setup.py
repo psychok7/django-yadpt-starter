@@ -11,7 +11,7 @@ from six.moves import input, urllib
 from email.utils import parseaddr
 
 # Point this to a tag with the latest code.
-TEMPLATE_VERSION_TAG = '1.0-beta'
+TEMPLATE_VERSION_TAG = '1.0-rc1'
 
 # Make sure you have Django 1.8.x installed in the appropriate Python version
 # you are using (either pip3 or pip).
@@ -80,8 +80,9 @@ def generate_cerbot_certs(project_name, email, domain):
 
 
 def _cleanup(project_name):
+    print('Cleaning...')
     if not os.path.exists(project_name):
-        raise ValueError("Something went wrong")
+        raise ValueError('Something went wrong')
     else:
         # Copy the sub-folder inside /minimal one level up and delete
         # unnecessary files.
@@ -92,7 +93,7 @@ def _cleanup(project_name):
         shutil.move('temp/' + project_name + '/', '.')
         shutil.rmtree('temp/')
         shutil.rmtree(project_name + '/_config/')
-        os.remove(project_name + '/start.py')
+        os.remove(project_name + '/yadtp-setup.py')
 
         if os.path.exists('django-startproject.py'):
             os.remove('django-startproject.py')
@@ -112,13 +113,14 @@ if __name__ == "__main__":
     project_name = args['project_name']
 
     if args['environment'] == 'production' or args['environment'] == 'staging':
-        print(args)
         email, domain = user_input()
         fetch_latest_template(
             project_name=project_name, email=email, domain=domain)
+        _cleanup(project_name=project_name)
+        print('Generating HTTPS certs...')
+        print('Please ensure this machine owns the domain.')
         generate_cerbot_certs(
             project_name=project_name, email=email, domain=domain)
-        _cleanup(project_name=project_name)
 
     elif args['environment'] == 'dev':
         tag_version = TEMPLATE_VERSION_TAG
