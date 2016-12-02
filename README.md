@@ -7,11 +7,11 @@ While there is no shortage of Template Skeletons for Django projects, the aim of
 - Configuration performed by `django-yadtp-starter`, a small utility that makes it trivial to setup your project;
 - Automatic generation and renewal of [Let's Encrypt](https://letsencrypt.org) certificates;
 - Adheres to best practices;
-- Provides different environments: One without valid a certificate for local development and another with a valid certificate (for Production or Staging).
+- Provides different environments: One without a valid certificate for local development and another with a valid certificate (for Production or Staging).
 
 Once finished there should be 2 templates: a **minimal** but functional template and a more complete template.
 
-## Usage — The TL;DR Version
+## Usage
 
 Getting your shiny new Django project up and running, complete with SSL certificates, is as easy as following these simple steps:
 
@@ -28,42 +28,29 @@ Getting your shiny new Django project up and running, complete with SSL certific
 
 3. Add your beautifully crafted code and then start the `Docker Containers`
 
-		cd PROJECT_NAME
+		cd path/to/PROJECT_NAME
 		docker-compose build
 		docker-compose up -d
 
 4. There is no step 4, just enjoy!
 
-
-## Usage — The Detailed Version
-
-`django-yadtp-starter` is a small utility that makes setting up your Django project trivial. Essentially what it does is:
-
-1. Downloads [`django-startproject.py`](https://github.com/psychok7/django-startproject-plus/blob/master/django-startproject.py), needed in order to pass extra-context variables;
-2. Asks for email to associate with the generated certificate;
-3. Asks for domain for which to generate a certificate;
-4. Creates the project based on the template;
-5. Launches the Certbot container and generates a certificate. _This will only be done for `production` and `staging` environment_;
-6. Does a little house-keeping and cleans up after itself.
-
 **Note:** `django-yadtp-starter` can be run as many times as you like in order to create multiple environments, there are however some caveats:
 
-ensure you always use a different `PROJECT_NAME` each time.
+1. **PROJECT_NAME** must be something unique to ensure that volumes and containers don't collide;
+2. Since certbot is using the [`--standalone`](https://certbot.eff.org/docs/using.html#standalone) plugin which binds to ports `80` and `443`, you need to stop any running containers or services that may already be bound to those ports;
 
 
+### Advanced Usage
+
+`django-yadtp-starter` will ask you for a `domain` name. If you require more than one domain (ex. domain.com and www.domain.com) then simply run through the startup script and then, before starting the containers, run
+
+`docker run -it --rm -v {project_name}_https_certs:/etc/letsencrypt -p 80:80 -p 443:443 palobo/certbot:1.0 certonly -t -n --standalone --agree-tos -d {domain} -d {domain} -d {domain}...`
 
 
 
 ## Free HTTPS (SSL/TLS) for websites (Let's Encrypt certificates) using Certbot
 
-
-For Staging and Production Environments, a [Let's Encrypt](https://letsencrypt.org) Certificate is generated using [Certbot](https://certbot.eff.org).
-In this instance, Certbot uses the `--webroot` plugin which creates a temporary file in `WEBROOT_PATH/.well-known` to validate correct ownership of your domain after which it will generate a certificate and place it in `/etc/letsencrypt/live/DOMAIN`.
-
-Before building and starting your staging or production containers you need to ensure that:
-
-- `staging.env` and `production.env` have the correct `EMAIL=` and `DOMAIN=` information filled out;
-- Your django app must already be reachable at `DOMAIN`, meaning DNS must already be configured properly;
+For environments where a certificate is generated (staging or production), [Certbot](https://certbot.eff.org) is used to generate a a [Let's Encrypt](https://letsencrypt.org) certificate. The only requirement is that you already have DNS setup so that you Django app is already reachable.
 
 **Note:** Given there is a daily cron job which checks to see if the certificate is up for renewal, it's essential the container is always kept running.
 
