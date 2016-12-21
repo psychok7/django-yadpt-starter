@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import sys
@@ -11,7 +12,7 @@ from six.moves import input, urllib
 from email.utils import parseaddr
 
 # Point this to a tag with the latest code.
-TEMPLATE_VERSION_TAG = '1.0'
+TEMPLATE_VERSION_TAG = '1.1'
 
 # Make sure you have Django 1.8.x installed in the appropriate Python version
 # you are using (either pip3 or pip).
@@ -93,7 +94,7 @@ def _cleanup(project_name):
         shutil.move('temp/' + project_name + '/', '.')
         shutil.rmtree('temp/')
         shutil.rmtree(project_name + '/_config/')
-        os.remove(project_name + '/yadtp-setup.py')
+        os.remove(project_name + '/django-yadpt-starter.py')
 
         if os.path.exists('django-startproject.py'):
             os.remove('django-startproject.py')
