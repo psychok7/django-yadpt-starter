@@ -11,7 +11,7 @@ from six.moves import input, urllib
 from email.utils import parseaddr
 
 # Point this to a tag with the latest code.
-TEMPLATE_VERSION_TAG = '1.0-rc1'
+TEMPLATE_VERSION_TAG = '1.0'
 
 # Make sure you have Django 1.8.x installed in the appropriate Python version
 # you are using (either pip3 or pip).
