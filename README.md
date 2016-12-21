@@ -1,45 +1,61 @@
-=============================
-django-project-template-yadpt
-=============================
+# django-project-template-yadpt
 
 `django-project-template-yadpt` is Yet Another Django Project Template skeleton for Django projects.
 
-There will be two template versions once it is finished, being one a minimal one and another one more complete one.
+While there is no shortage of Template Skeletons for Django projects, the aim of this one is to provide you, to the extent possible, with a fully automated setup using `Docker Containers` and a [Let's Encrypt](https://letsencrypt.org) SSL certificate for your site, all while adhering to recommended best practices. A few key features are:
 
-I am using `Docker` as well in the template, with a Production, Staging, and Local development version.
+- Configuration performed by `django-yadtp-starter`, a small utility that makes it trivial to setup your project;
+- Automatic generation and renewal of [Let's Encrypt](https://letsencrypt.org) certificates;
+- Adheres to best practices;
+- Provides different environments: One without a valid certificate for local development and another with a valid certificate (for Production or Staging).
+
+Once finished there should be 2 templates: a **minimal** but functional template and a more complete template.
+
+## Usage
+
+Getting your shiny new Django project up and running, complete with SSL certificates, is as easy as following these simple steps:
+
+1. Install `django-yadtp-starter` utility
+
+		pip install django-yadtp-starter
+
+2. Create your project structure
+
+		python django-yadtp-starter -e ENVIRONMENT PROJECT_NAME
+
+	- `ENVIRONMENT` must be either `production` or `dev` _(SSL certificates are only created production)_
+	- `PROJECT_NAME` is the name you wish to give your project. Bear in mind that this name will be used throughout the Docker environment (volumes, containers, networks, etc.)
+
+3. Add your beautifully crafted code and then start the `Docker Containers`
+
+		cd path/to/PROJECT_NAME
+		docker-compose build
+		docker-compose up -d
+
+4. There is no step 4, just enjoy!
+
+**Note:** `django-yadtp-starter` can be run as many times as you like in order to create multiple environments, there are however some caveats:
+
+1. **PROJECT_NAME** must be something unique to ensure that volumes and containers don't collide;
+2. Since certbot is using the [`--standalone`](https://certbot.eff.org/docs/using.html#standalone) plugin which binds to ports `80` and `443`, you need to stop any running containers or services that may already be bound to those ports;
 
 
-Installation
-============
+### Advanced Usage
 
-To install, simply copy this repository to your custom location, and run the following command specifiying the `--template` location to the location where you cloned the `django-project-template-yadpt` repository
+`django-yadtp-starter` will ask you for a `domain` name. If you require more than one domain (ex. domain.com and www.domain.com) then simply run through the startup script and then, before starting the containers, run
 
-
-Usage
-============
-
-After installing django-project-template-yadpt, simply run the following command (from within
-the directory in where the new project directory should be created):
-
-	django-admin startproject project_name  --template=/your_path/django-project-template-yadpt/minimal/ --extension='py, yml, conf, sh'
+`docker run -it --rm -v {project_name}_https_certs:/etc/letsencrypt -p 80:80 -p 443:443 palobo/certbot:1.0 certonly -t -n --standalone --agree-tos -d {domain} -d {domain} -d {domain}...`
 
 
-Free HTTPS (SSL/TLS) for websites (Let's Encrypt certificates) using Certbot
-=============================================================================
 
-For Staging and Production Environments, a [Let's Encrypt](https://letsencrypt.org) Certificate is generated using [Certbot](https://certbot.eff.org).
-In this instance, Certbot is uses the `--webroot` plugin which creates a temporary file in `WEBROOT_PATH/.well-known` to validate correct ownership of your domain after which it will generate a certificate and place it in `/etc/letsencrypt/live/DOMAIN`.
+## Free HTTPS (SSL/TLS) for websites (Let's Encrypt certificates) using Certbot
 
-Before building and starting your staging or production containers you need to ensure that:
-
-- `staging.env` and `production.env` have the correct `EMAIL=` and `DOMAIN=` information filled out;
-- Your django app must already be reachable at `DOMAIN`, meaning DNS must already be configured properly;
+For environments where a certificate is generated (staging or production), [Certbot](https://certbot.eff.org) is used to generate a a [Let's Encrypt](https://letsencrypt.org) certificate. The only requirement is that you already have DNS setup so that you Django app is already reachable.
 
 **Note:** Given there is a daily cron job which checks to see if the certificate is up for renewal, it's essential the container is always kept running.
 
 
-Used Third Party Apps
-=====================
+## Used Third Party Apps
 
  - https://github.com/docker/docker
  - https://github.com/docker/compose
@@ -51,5 +67,6 @@ Used Third Party Apps
  - https://github.com/getsentry/raven-python
  - https://github.com/kennethreitz/requests
  - https://github.com/nedbat/coveragepy
+ - https://github.com/certbot/certbot
 
 See the files included in the project_template directory for an example.
