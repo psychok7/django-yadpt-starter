@@ -6,18 +6,22 @@ from setuptools import setup, find_packages
 from codecs import open
 from os import path
 
+# https://packaging.python.org/distributing/#packaging-your-project
+# https://packaging.python.org/distributing/#uploading-your-project-to-pypi
+# https://docs.djangoproject.com/en/1.10/intro/reusable-apps/
+# http://peterdowns.com/posts/first-time-with-pypi.html
+
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
-# https://packaging.python.org/distributing/
-
 setup(
     name='django-yadpt-starter',
     packages=find_packages(),
-    version='1.0-beta',
+    include_package_data=True,
+    version='1.1',
     description=(
         'django-project-template-yadpt is Yet Another Django Project Template '
         'skeleton for Django projects'
@@ -26,14 +30,17 @@ setup(
     author='Nuno Khan',
     author_email='nunok7@gmail.com',
     url='https://github.com/psychok7/django-project-template-yadpt',
-    download_url=('https://github.com/psychok7/django-project-template-yadpt/tarball/v1.0-beta'),
+    download_url=(
+        'https://github.com/psychok7/django-project-template-yadpt/tarball/v1.1'
+    ),
     keywords=[
         'django', 'template', 'project templates', 'python', 'https',
-        'letsencrypt'
+        'letsencrypt', 'starter'
     ],
-    install_requires=['Django >= 1.8'],
+    scripts=['minimal/django-yadpt-starter.py'],
+    install_requires=['Django >= 1.8', 'six >= 1.10.0'],
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
 
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Build Tools',
