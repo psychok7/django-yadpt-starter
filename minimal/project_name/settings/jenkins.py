@@ -10,10 +10,9 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': '{{ project_name }}-jenkins',
         'USER': 'postgres',
-        'PASSWORD': 'admin',
+        'PASSWORD': 'postgres',
         'HOST': '',
         'PORT': '',
     }
 }
 
-COMPRESSOR_ENABLED = False

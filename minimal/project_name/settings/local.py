@@ -16,5 +16,3 @@ DATABASES = {
     }
 }
 
-# BROKER_URL = 'redis://prio_redis:6379/0'
-# COMPRESS_ENABLED = False
