@@ -21,7 +21,7 @@ setup(
     name='django-yadpt-starter',
     packages=find_packages(),
     include_package_data=True,
-    version='1.1',
+    version='1.2',
     description=(
         'django-yadpt-starter is Yet Another Django Project Template '
         'skeleton for Django projects'
