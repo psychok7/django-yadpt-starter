@@ -32,7 +32,9 @@ Getting your shiny new Django project up and running, complete with SSL certific
 		docker-compose build
 		docker-compose up -d
 
-4. There is no step 4, just enjoy!
+4. At the moment you will probably run into some errors (because of issue https://github.com/psychok7/django-project-template-yadpt/issues/13) and to fix them you must manually go into the docker container and delete the content of the database as explained. After that just run `docker-compose up -d --force-recreate`.
+
+5. There is no step 5, just enjoy!
 
 **Note:** `django-yadpt-starter` can be run as many times as you like in order to create multiple environments, there are however some caveats:
 
