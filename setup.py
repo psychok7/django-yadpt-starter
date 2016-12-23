@@ -23,15 +23,15 @@ setup(
     include_package_data=True,
     version='1.1',
     description=(
-        'django-project-template-yadpt is Yet Another Django Project Template '
+        'django-yadpt-starter is Yet Another Django Project Template '
         'skeleton for Django projects'
     ),
     long_description=long_description,
     author='Nuno Khan',
     author_email='nunok7@gmail.com',
-    url='https://github.com/psychok7/django-project-template-yadpt',
+    url='https://github.com/psychok7/django-yadpt-starter',
     download_url=(
-        'https://github.com/psychok7/django-project-template-yadpt/tarball/v1.1'
+        'https://github.com/psychok7/django-yadpt-starter/tarball/v1.1'
     ),
     keywords=[
         'django', 'template', 'project templates', 'python', 'https',

@@ -1,6 +1,6 @@
-# django-project-template-yadpt
+# django-yadpt-starter
 
-`django-project-template-yadpt` is Yet Another Django Project Template skeleton for Django projects.
+`django-yadpt-starter` is Yet Another Django Project Template skeleton for Django projects.
 
 While there is no shortage of Template Skeletons for Django projects, the aim of this one is to provide you, to the extent possible, with a fully automated setup using `Docker Containers` and a [Let's Encrypt](https://letsencrypt.org) SSL certificate for your site, all while adhering to recommended best practices. A few key features are:
 
@@ -32,7 +32,7 @@ Getting your shiny new Django project up and running, complete with SSL certific
 		docker-compose build
 		docker-compose up -d
 
-4. At the moment you will probably run into some errors (because of issue https://github.com/psychok7/django-project-template-yadpt/issues/13) and to fix them you must manually go into the docker container and delete the content of the database as explained. After that just run `docker-compose up -d --force-recreate`.
+4. At the moment you will probably run into some errors (because of issue https://github.com/psychok7/django-yadpt-starter/issues/13) and to fix them you must manually go into the docker container and delete the content of the database as explained. After that just run `docker-compose up -d --force-recreate`.
 
 5. There is no step 5, just enjoy!
 

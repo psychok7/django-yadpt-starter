@@ -46,7 +46,7 @@ def fetch_latest_template(project_name, email, domain):
     )
 
     template = (
-        'https://github.com/psychok7/django-project-template-yadpt/archive/'
+        'https://github.com/psychok7/django-yadpt-starter/archive/'
         'v{tag_version}.zip'.format(**locals())
     )
 
@@ -127,7 +127,7 @@ if __name__ == "__main__":
         tag_version = TEMPLATE_VERSION_TAG
         extension = 'py, yml, conf, sh'
         template = (
-            'https://github.com/psychok7/django-project-template-yadpt/archive/'
+            'https://github.com/psychok7/django-yadpt-starter/archive/'
             'v{tag_version}.zip'.format(**locals())
         )
         generate_template = (
