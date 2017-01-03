@@ -11,6 +11,9 @@ from os import path
 # https://docs.djangoproject.com/en/1.10/intro/reusable-apps/
 # http://peterdowns.com/posts/first-time-with-pypi.html
 
+
+VERSION = '1.2'
+
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
@@ -21,7 +24,7 @@ setup(
     name='django-yadpt-starter',
     packages=find_packages(),
     include_package_data=True,
-    version='1.2',
+    version=VERSION,
     description=(
         'django-yadpt-starter is Yet Another Django Project Template '
         'skeleton for Django projects'
@@ -31,11 +34,11 @@ setup(
     author_email='nunok7@gmail.com',
     url='https://github.com/psychok7/django-yadpt-starter',
     download_url=(
-        'https://github.com/psychok7/django-yadpt-starter/tarball/v1.1'
+        'https://github.com/psychok7/django-yadpt-starter/tarball/v' + VERSION
     ),
     keywords=[
         'django', 'template', 'project templates', 'python', 'https',
-        'letsencrypt', 'starter'
+        'letsencrypt', 'starter', 'cookiecutter', 'docker', 'docker-compose'
     ],
     scripts=['minimal/django-yadpt-starter.py'],
     install_requires=['Django >= 1.8', 'six >= 1.10.0'],
@@ -48,6 +51,8 @@ setup(
         'License :: OSI Approved :: MIT License',
 
         'Framework :: Django :: 1.8',
+        'Framework :: Django :: 1.9',
+        'Framework :: Django :: 1.10',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.2',
