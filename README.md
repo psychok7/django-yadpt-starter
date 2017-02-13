@@ -48,7 +48,20 @@ Getting your shiny new Django project up and running, complete with SSL certific
 
 `docker run -it --rm -v {project_name}_https_certs:/etc/letsencrypt -p 80:80 -p 443:443 palobo/certbot:1.0 certonly -t -n --standalone --agree-tos -d {domain} -d {domain} -d {domain}...`
 
+### Migrating existing code from one Environment to another.
 
+
+If you have running code already deployed and eventually want to switch machines or have the same code running on another machine (from staging to production for example) you can do it manually:
+
+```
+1. docker-compose -f staging.yml build
+2. docker-compose -f staging.yml up # will throw errors, but it's ok
+3. docker-compose -f staging.yml stop
+4. docker volume ls # And get the name volume to pass to the the follwing command. e.g: smal_smal_https_certs 
+5. docker run -it --rm -v {named_volume from step 4}:/etc/letsencrypt -p 80:80 -p 443:443 palobo/certbot:1.0 certonly -t -n --standalone --email {email} --agree-tos -d {domain}
+6. docker-compose -f staging.yml build
+7. docker-compose -f staging.yml up # Everything should be fine now.
+```
 
 ## Free HTTPS (SSL/TLS) for websites (Let's Encrypt certificates) using Certbot
 
