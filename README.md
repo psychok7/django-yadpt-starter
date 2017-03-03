@@ -26,7 +26,7 @@ Getting your shiny new Django project up and running, complete with SSL certific
 	- `ENVIRONMENT` must be either `production` or `dev` _(SSL certificates are only created production)_
 	- `PROJECT_NAME` is the name you wish to give your project. Bear in mind that this name will be used throughout the Docker environment (volumes, containers, networks, etc.)
 
-3. Add your beautifully crafted code and then start the `Docker Containers`. Please note that choosing your environment properly is very important for your docker-compose .yml . If you are still developing use dev.yml. The default one is for production, so do not use this on your local machine while developing otherwise you will run into errors.
+3. Add your beautifully crafted code and then start the `Docker Containers`. Please note that choosing your environment properly is very important for your docker-compose ".yml" . If you are still developing use dev.yml (Dev mode does not use Nginx). The default one is for Production, so do not use this one on your local machine while developing otherwise you will run into errors.
 
 		cd path/to/PROJECT_NAME
 		docker-compose -f {env}.yml build
