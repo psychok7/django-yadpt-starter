@@ -48,6 +48,10 @@ Getting your shiny new Django project up and running, complete with SSL certific
 
 `docker run -it --rm -v {project_name}_https_certs:/etc/letsencrypt -p 80:80 -p 443:443 palobo/certbot:1.0 certonly -t -n --standalone --agree-tos -d {domain} -d {domain} -d {domain} -m myemail@example.com`
 
+If for some reason you decide to add a new domain to the list of existing domains, you will need to use the `expand` and replace the existing certificate with a new certificate. Remember to re-add all the domains that where there already with the new one.
+
+`docker run -it --rm -v {project_name}_https_certs:/etc/letsencrypt -p 80:80 -p 443:443 palobo/certbot:1.0 certonly -t -n --standalone --expand --agree-tos -d {domain} -d {domain} -d {domain} -m myemail@example.com`
+
 ### Migrating existing code from one Environment to another.
 
 
