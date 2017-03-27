@@ -46,7 +46,7 @@ Getting your shiny new Django project up and running, complete with SSL certific
 
 `django-yadpt-starter` will ask you for a `domain` name. If you require more than one domain (ex. domain.com and www.domain.com) then simply run through the startup script and then, before starting the containers, run
 
-`docker run -it --rm -v {project_name}_https_certs:/etc/letsencrypt -p 80:80 -p 443:443 palobo/certbot:1.0 certonly -t -n --standalone --agree-tos -d {domain} -d {domain} -d {domain}...`
+`docker run -it --rm -v {project_name}_https_certs:/etc/letsencrypt -p 80:80 -p 443:443 palobo/certbot:1.0 certonly -t -n --standalone --agree-tos -d {domain} -d {domain} -d {domain} -m myemail@example.com`
 
 ### Migrating existing code from one Environment to another.
 
