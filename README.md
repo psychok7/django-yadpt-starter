@@ -42,20 +42,10 @@ Getting your shiny new Django project up and running, complete with SSL certific
 2. Since certbot is using the [`--standalone`](https://certbot.eff.org/docs/using.html#standalone) plugin which binds to ports `80` and `443`, you need to stop any running containers or services that may already be bound to those ports;
 
 
-### Advanced Usage
-
-`django-yadpt-starter` will ask you for a `domain` name. If you require more than one domain (ex. domain.com and www.domain.com) then simply run through the startup script and then, before starting the containers, run
-
-`docker run -it --rm -v {project_name}_https_certs:/etc/letsencrypt -p 80:80 -p 443:443 palobo/certbot:1.0 certonly -t -n --standalone --agree-tos -d {domain} -d {domain} -d {domain} -m myemail@example.com`
-
-If for some reason you decide to add a new domain to the list of existing domains, you will need to use the `expand` and replace the existing certificate with a new certificate. Remember to re-add all the domains that where there already with the new one.
-
-`docker run -it --rm -v {project_name}_https_certs:/etc/letsencrypt -p 80:80 -p 443:443 palobo/certbot:1.0 certonly -t -n --standalone --expand --agree-tos -d {domain} -d {domain} -d {domain} -m myemail@example.com`
-
 ### Migrating existing code from one Environment to another.
 
 
-If you have running code already deployed and eventually want to switch machines or have the same code running on another machine (from staging to production for example) you can do it manually:
+If you have running code already deployed and eventually want to switch machines or have the same code running on another machine (from dev to production for example) you can do it manually. But before that, make sure the project you created from the `dev` environment has everything it needs, like for example the `server_name` in `nginx.conf` is filled and you also have your domain in `letsencrypt.conf`. The easiest way might still be you creating an empty project with the `production` environment in your final machine so that all theses gaps can be automatically filled and then copy that folder to your local machine and add your existing code into it and push it to your git repository (or push it directly to git from your prod server if you have write permissions). This is still something we haven't really found an easy way to solve, nevertheless once you learn the project structure this migration becomes fast and painless. So after filling in just:
 
 ```
 1. docker-compose -f staging.yml build
@@ -66,6 +56,17 @@ If you have running code already deployed and eventually want to switch machines
 6. docker-compose -f staging.yml build
 7. docker-compose -f staging.yml up # Everything should be fine now.
 ```
+
+### Advanced Usage
+
+`django-yadpt-starter` will ask you for a `domain` name. If you require more than one domain (ex. domain.com and www.domain.com) then simply run through the startup script and then, before starting the containers, run
+
+`docker run -it --rm -v {project_name}_https_certs:/etc/letsencrypt -p 80:80 -p 443:443 palobo/certbot:1.0 certonly -t -n --standalone --agree-tos -d {domain} -d {domain} -d {domain} -m myemail@example.com`
+
+If for some reason you decide to add a new domain to the list of existing domains, you will need to use the `expand` and replace the existing certificate with a new certificate. Remember to re-add all the domains that where there already with the new one.
+
+`docker run -it --rm -v {project_name}_https_certs:/etc/letsencrypt -p 80:80 -p 443:443 palobo/certbot:1.0 certonly -t -n --standalone --expand --agree-tos -d {domain} -d {domain} -d {domain} -m myemail@example.com`
+
 
 ## Free HTTPS (SSL/TLS) for websites (Let's Encrypt certificates) using Certbot
 
