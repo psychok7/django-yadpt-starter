@@ -60,4 +60,3 @@ services:
 volumes:
   {{ project_name }}_data:
   {{ project_name }}_https_certs:
-    external: true
