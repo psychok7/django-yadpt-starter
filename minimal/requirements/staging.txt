@@ -1,5 +1,5 @@
 -r base.txt
 
-gunicorn==19.4.5
-pyOpenSSL==0.15.1
-urllib3==1.14
+gunicorn==19.7.1
+pyOpenSSL==16.2.0
+urllib3==1.20
