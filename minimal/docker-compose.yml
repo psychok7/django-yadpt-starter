@@ -10,14 +10,16 @@ services:
     image: mdillon/postgis:9.5
     volumes:
       - {{ project_name }}_data:/var/lib/postgresql/data
-      - ./logs/postgres:/var/log/postgresql
+      - ./logs/postgresql:/var/log/postgresql
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "postgres"
 
   {{ project_name }}_redis:
     restart: always
-    image: redis:3.0.7
+    image: redis:3.2.8
+    volumes:
+      - ./logs/redis:/var/log/redis
 
   {{ project_name }}_web:
     restart: always
@@ -42,6 +44,7 @@ services:
     volumes:
       - ./media:/code/media
       - ./staticfiles:/code/staticfiles
+      - ./logs/nginx:/var/log/nginx
       - {{ project_name }}_https_certs:/etc/letsencrypt
     ports:
       - "80:80"
