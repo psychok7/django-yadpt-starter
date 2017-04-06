@@ -35,6 +35,7 @@ def user_input():
 
 def fetch_latest_template(project_name, email, domain):
     tag_version = TEMPLATE_VERSION_TAG
+    print('Using VERSION: {tag_version}'.format(**locals()))
     extension = 'py, yml, conf, sh'
 
     # Download forked django-startproject.py from
