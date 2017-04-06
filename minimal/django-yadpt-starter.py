@@ -12,7 +12,7 @@ from six.moves import input, urllib
 from email.utils import parseaddr
 
 # Point this to a tag with the latest code.
-TEMPLATE_VERSION_TAG = '1.2'
+TEMPLATE_VERSION_TAG = '1.3'
 
 # Make sure you have Django 1.8.x installed in the appropriate Python version
 # you are using (either pip3 or pip).
@@ -35,6 +35,7 @@ def user_input():
 
 def fetch_latest_template(project_name, email, domain):
     tag_version = TEMPLATE_VERSION_TAG
+    print('Using VERSION: {tag_version}'.format(**locals()))
     extension = 'py, yml, conf, sh'
 
     # Download forked django-startproject.py from
