@@ -8,7 +8,7 @@ from os import path
 
 # https://packaging.python.org/distributing/#packaging-your-project
 # https://packaging.python.org/distributing/#uploading-your-project-to-pypi
-# https://docs.djangoproject.com/en/1.10/intro/reusable-apps/
+# https://docs.djangoproject.com/en/1.11/intro/reusable-apps/
 # http://peterdowns.com/posts/first-time-with-pypi.html
 
 
@@ -53,6 +53,7 @@ setup(
         'Framework :: Django :: 1.8',
         'Framework :: Django :: 1.9',
         'Framework :: Django :: 1.10',
+        'Framework :: Django :: 1.11',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.2',
