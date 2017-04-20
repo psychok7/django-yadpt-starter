@@ -17,7 +17,8 @@ RUN apt-get update && apt-get install -y \
   zlib1g-dev \
   libffi-dev \
   libssl-dev \
-  ipython
+  ipython \
+  locales -qq
 
 RUN dpkg-reconfigure locales
 # Set the locale
