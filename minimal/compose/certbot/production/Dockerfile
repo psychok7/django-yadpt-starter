@@ -1,4 +1,4 @@
-FROM palobo/certbot:1.0
+FROM palobo/certbot:1.1
 
 COPY certbot-renew /etc/periodic/daily/
 RUN chmod +x /etc/periodic/daily/certbot-renew

@@ -73,7 +73,7 @@ def fetch_latest_template(project_name, email, domain):
 def generate_cerbot_certs(project_name, email, domain):
     generate_certs = (
         'docker run -it --rm -v {project_name}_https_certs:/etc/letsencrypt '
-        '-p 80:80 -p 443:443 palobo/certbot:1.0 certonly -t -n --standalone '
+        '-p 80:80 -p 443:443 palobo/certbot:1.1 certonly -t -n --standalone '
         '-d {domain} -m {email} --agree-tos'.format(**locals())
     )
     print('generate_certs: ', generate_certs)
