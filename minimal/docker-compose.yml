@@ -7,7 +7,7 @@ services:
 
   {{ project_name }}_postgis:
     restart: always
-    image: mdillon/postgis:9.5
+    image: mdillon/postgis:9.5-alpine
     volumes:
       - {{ project_name }}_data:/var/lib/postgresql/data
       - ./logs/postgresql:/var/log/postgresql
@@ -17,7 +17,7 @@ services:
 
   {{ project_name }}_redis:
     restart: always
-    image: redis:3.2.8
+    image: redis:3.2.9-alpine
     volumes:
       - ./logs/redis:/var/log/redis
 
