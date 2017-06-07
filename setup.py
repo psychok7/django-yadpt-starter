@@ -12,7 +12,7 @@ from os import path
 # http://peterdowns.com/posts/first-time-with-pypi.html
 
 
-VERSION = '1.3'
+VERSION = '1.4'
 
 here = path.abspath(path.dirname(__file__))
 
@@ -53,6 +53,7 @@ setup(
         'Framework :: Django :: 1.8',
         'Framework :: Django :: 1.9',
         'Framework :: Django :: 1.10',
+        'Framework :: Django :: 1.11',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.2',
