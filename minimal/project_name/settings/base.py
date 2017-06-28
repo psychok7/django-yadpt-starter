@@ -162,8 +162,18 @@ CACHES = {
 AUTH_USER_MODEL = 'authtools.User'
 
 logging_folder_name = 'logs/'
-if not os.path.exists(os.path.join(BASE_DIR, logging_folder_name)):
-    os.makedirs(os.path.join(BASE_DIR, logging_folder_name))
+logging_nginx_path = logging_folder_name + 'nginx/'
+logging_gunicorn_path = logging_folder_name + 'gunicorn/'
+
+try:
+    if not os.path.exists(os.path.join(BASE_DIR, logging_folder_name)):
+        os.makedirs(os.path.join(BASE_DIR, logging_folder_name))
+    if not os.path.exists(os.path.join(BASE_DIR, logging_nginx_path)):
+        os.makedirs(os.path.join(BASE_DIR, logging_nginx_path))
+    if not os.path.exists(os.path.join(BASE_DIR, logging_gunicorn_path)):
+        os.makedirs(os.path.join(BASE_DIR, logging_gunicorn_path))
+except FileExistsError:
+    pass
 
 LOGGING = {
     'version': 1,
