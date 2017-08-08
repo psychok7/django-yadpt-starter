@@ -2,7 +2,8 @@ from .base import *
 
 DEBUG = False
 
-BASE_URL = 'http://localhost:80'
+ALLOWED_HOSTS = []
+BASE_URL = 'https://localhost:80'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -17,6 +18,8 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+SECRET_KEY = '{{ secret_key }}'
 
 # TLS/SSL settings
 
