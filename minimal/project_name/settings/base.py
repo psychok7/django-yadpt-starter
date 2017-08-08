@@ -147,7 +147,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 REDIS_SETTINGS = {
-    'host': '{{ project_name }}',
+    'host': '{{ project_name }}_redis',
     'port': '6379',
     'db':  '0'
 }
