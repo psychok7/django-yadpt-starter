@@ -146,7 +146,15 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',  # default
 )
 
-REDIS_URL = 'redis://{{ project_name }}_redis:6379/0'
+REDIS_SETTINGS = {
+    'host': '{{ project_name }}',
+    'port': '6379',
+    'db':  '0'
+}
+
+REDIS_URL = 'redis://{0}:{1}/{2}'.format(
+    REDIS_SETTINGS['host'], REDIS_SETTINGS['port'], REDIS_SETTINGS['db']
+)
 
 # https://docs.djangoproject.com/en/1.8/topics/http/sessions/#using-cached-sessions
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
