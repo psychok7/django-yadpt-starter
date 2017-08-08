@@ -18,6 +18,8 @@ DATABASES = {
     }
 }
 
+SECRET_KEY = '{{ secret_key }}'
+
 # TLS/SSL settings
 
 # https://docs.djangoproject.com/en/1.8/topics/security/#ssl-https

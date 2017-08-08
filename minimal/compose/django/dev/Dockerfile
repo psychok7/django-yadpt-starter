@@ -1,4 +1,4 @@
-FROM python:3.5.3
+FROM python:3.6.2
 ENV PYTHONUNBUFFERED 1
 
 # We need new PostgreSQL Client versions and the one in Debian 8 is old

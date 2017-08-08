@@ -20,9 +20,6 @@ BASE_URL = ''
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/{{ docs_version }}/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '{{ secret_key }}'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -30,6 +27,8 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+
+THIRD_PARTY_APPS_IMPORT_FIRST = []
 
 DJANGO_APPS = [
     'django.contrib.admin',
@@ -55,7 +54,8 @@ LOCAL_APPS = [
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+INSTALLED_APPS = THIRD_PARTY_APPS_IMPORT_FIRST + DJANGO_APPS + \
+                 THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -146,7 +146,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',  # default
 )
 
-BROKER_URL = 'redis://{{ project_name }}_redis:6379/0'
+REDIS_URL = 'redis://{{ project_name }}_redis:6379/0'
 
 # https://docs.djangoproject.com/en/1.8/topics/http/sessions/#using-cached-sessions
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
@@ -154,7 +154,7 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 CACHES = {
     'default': {
         'BACKEND': 'redis_cache.RedisCache',
-        'LOCATION': BROKER_URL,
+        'LOCATION': REDIS_URL,
     },
 }
 
