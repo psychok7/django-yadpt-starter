@@ -2,7 +2,8 @@ from .base import *
 
 DEBUG = False
 
-BASE_URL = ''
+ALLOWED_HOSTS = []
+BASE_URL = 'https://localhost:80'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
