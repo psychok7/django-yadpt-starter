@@ -1,16 +1,11 @@
-FROM python:3.6.2
+FROM python:3.6.3-stretch
 ENV PYTHONUNBUFFERED 1
-
-# We need new PostgreSQL Client versions and the one in Debian 8 is old
-RUN touch /etc/apt/sources.list.d/pgdg.list
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" >> /etc/apt/sources.list.d/pgdg.list
-RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
 RUN apt-get update && apt-get install -y \
   build-essential \
   git-core \
   libpq-dev \
-  postgresql-client-9.5 \
+  postgresql-client-9.6 \
   libjpeg-dev \
   binutils \
   libproj-dev \

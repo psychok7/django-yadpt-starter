@@ -1,4 +1,4 @@
-version: '2'
+version: '2.1'
 
 services:
   # Based on https://realpython.com/blog/python/django-development-with-docker-compose-and-machine/
@@ -7,7 +7,7 @@ services:
 
   {{ project_name }}_postgis:
     restart: always
-    image: mdillon/postgis:9.5-alpine
+    image: mdillon/postgis:9.6-alpine
     volumes:
       - {{ project_name }}_data:/var/lib/postgresql/data
       - ./logs/postgresql:/var/log/postgresql
@@ -17,7 +17,7 @@ services:
 
   {{ project_name }}_redis:
     restart: always
-    image: redis:3.2.9-alpine
+    image: redis:3.2.11-alpine
     volumes:
       - ./logs/redis:/var/log/redis
 
@@ -31,6 +31,11 @@ services:
       - ./media:/code/media
       - ./staticfiles:/code/staticfiles
       - ./{{ project_name }}_management:/code/{{ project_name }}_management
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "10"
     depends_on:
       - {{ project_name }}_postgis
       - {{ project_name }}_redis
