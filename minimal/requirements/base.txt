@@ -1,4 +1,4 @@
-Django==1.11.6
+Django==1.11.29
 argparse==1.4.0
 
 # Images
