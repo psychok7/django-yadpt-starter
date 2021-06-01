@@ -3,4 +3,4 @@
 gunicorn==19.7.1
 gevent==1.2.2
 pyOpenSSL==17.0.0
-urllib3==1.21.1
+urllib3==1.26.5
